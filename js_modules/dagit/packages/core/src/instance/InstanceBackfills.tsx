@@ -77,7 +77,6 @@ export const InstanceBackfills = () => {
             .filter((daemon) => daemon.daemonType === 'BACKFILL')
             .map((daemon) => daemon.required && daemon.healthy);
           const isBackfillHealthy = backfillHealths.length && backfillHealths.every((x) => x);
-
           return (
             <div>
               {isBackfillHealthy ? null : (
@@ -137,20 +136,7 @@ const BACKFILLS_QUERY = gql`
           status
           backfillStatus
           numRequested
-          partitionNames
           numPartitions
-          partitionRunStats {
-            numQueued
-            numInProgress
-            numSucceeded
-            numFailed
-            numPartitionsWithRuns
-            numTotalRuns
-          }
-          unfinishedRuns {
-            id
-            canTerminate
-          }
           timestamp
           partitionSetName
           partitionSet {
@@ -175,6 +161,6 @@ const BACKFILLS_QUERY = gql`
     }
   }
 
-  ${PYTHON_ERROR_FRAGMENT}
   ${BACKFILL_TABLE_FRAGMENT}
+  ${PYTHON_ERROR_FRAGMENT}
 `;
